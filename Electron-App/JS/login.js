@@ -1,3 +1,4 @@
+let input = document.getElementbyId("submit");
 async function validate() {
     console.log("I am being clicked");
     var username = document.getElementById("username").value;
@@ -40,3 +41,13 @@ async function validate() {
 
     console.log(`Received: ${dataReceived}`)
 }
+
+input.addEventListener("keypress", (event)=> {
+    // If the user presses the "Enter" key on the keyboard
+    if (event.key === "Enter") {
+      // Cancel the default action, if needed
+      event.preventDefault();
+      // Trigger the button element with a click
+      validate();
+    }
+});
