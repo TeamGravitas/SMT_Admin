@@ -5,11 +5,18 @@ var addedTable = document.getElementById("addedIpList").getElementsByTagName('tb
 var unaddedTable = document.getElementById("unaddedIpList").getElementsByTagName('tbody')[0];
 var addBtn = document.getElementById("add");
 var removeBtn = document.getElementById("remove");
+var searchBox = document.getElementById("searchBox");
+var ipPage = document.getElementById("ipPage");
+var searchResults = document.getElementById("searchResults");
+var searchList = document.getElementById("ipSearchList").getElementsByTagName('tbody')[0];
 
 addAll.addEventListener("click", toggle);
 unaddAll.addEventListener("click", toggle);
 addBtn.addEventListener("click", moveIps);
 removeBtn.addEventListener("click", moveIps);
+searchBox.addEventListener("keydown", fetchResults);
+searchBox.addEventListener("keyup", clearWhenEmtpy);
+
 
 async function clearLocalStorage() {
     localStorage.clear();
@@ -109,7 +116,7 @@ async function moveIps(ev) {
     } else {
         console.log("remove");
         let checkboxes = document.getElementsByName("cb-added");
-        let iplist = [];
+        let ipList = [];
         for(let i = 0; i < checkboxes.length; i++) {
             if(checkboxes[i].checked === true) {
                 data = {};
@@ -142,5 +149,69 @@ async function moveIps(ev) {
         });
         let allcb = document.getElementById("a-all");
         allcb.checked = false;
+    }
+}
+
+
+function displayResult(data) {
+        let newRow = searchList.insertRow(searchList.length);
+        cell1 = newRow.insertCell(0);
+        let checkbox = document.createElement('input');         
+        checkbox.type = "checkbox";
+        checkbox.name = "cb-added";
+        cell1.appendChild(checkbox)
+        cell2 = newRow.insertCell(1);
+        let ip = document.createElement('a');
+        let link = document.createTextNode(data.ip);
+        ip.href = "../html/softwareList.html";
+        ip.appendChild(link);
+        ip.onclick = function() {
+            localStorage.setItem("ip", data.ip);
+        };
+        cell2.appendChild(ip);
+        cell3 = newRow.insertCell(2);
+        cell3.innerHTML = data.os;
+        cell4 = newRow.insertCell(3);
+        cell4.innerHTML = data.dateAdded;
+}
+
+function displayResults(results) {
+    for(let i=0; i<results.length; i++) {
+        displayResult(results[i]);
+    }
+}
+
+function fetchResults(event) {
+    if (event.key === "Enter") {
+        searchList.innerHTML = "";
+        searchResults.classList.remove("d-none");
+        ipPage.classList.add("d-none");
+        // searchResults.textContent = "";
+        let options = {
+            method: "GET",
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + localStorage.getItem("accessToken")
+            },
+        }
+
+        let url = "http://localhost:3000/getIpWithSoftware/" + searchBox.value;
+        fetch(url, options)
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(jsonData) {
+                let results = jsonData["res"];
+                displayResults(results);
+            });
+    }
+}
+
+function clearWhenEmtpy(event) {
+    if(searchBox.value === "") {
+        searchResults.classList.add("d-none");
+        ipPage.classList.remove("d-none");
+        searchList.innerHTML = "";
     }
 }
