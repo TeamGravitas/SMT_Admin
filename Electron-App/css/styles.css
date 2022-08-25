@@ -1,0 +1,16 @@
+.table .thead-dark th {
+    color: #fff;
+    background: #1b107a;
+    border-color: #32383e;
+}
+
+body {
+    background: linear-gradient(to bottom, #78c7eb, #ffffff);
+    min-height: 100vh;
+}
+
+.navbar{
+    background-image: url('https://cdn-media-2.freecodecamp.org/w1280/5f9c9cfc740569d1a4ca3543.jpg');
+    background-size:cover; 
+    background-repeat: no-repeat;
+}

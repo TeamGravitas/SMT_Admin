@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Login page</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/0b8c566cd1.js" crossorigin="anonymous"></script>
+
+  <!-- Bootstrap Scripts -->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+  <link rel="stylesheet" href="css/login.css">
+
+</head>
+
+<body>
+  <div class="heading">
+    Software Monitoring &nbsp<i class="fa-solid fa-chart-line"></i>
+  </div>
+  <div class="body-style">
+    <!-- partial:index.partial.html -->
+    <div class="tile">
+      <div class="tile-header">
+        <h2
+          style="color: #9fe3f6; opacity: .90; font-size: 4rem; display: flex; justify-content: center; align-items: center; height: 100%;">
+          LOGIN</h2>
+      </div>
+
+      <div class="tile-body">
+        <div class="error hidden" style="padding-bottom: 20px;" id="error">Username and Password not authenticated, try again</div>
+        <form id="form">
+          <label class="form-input">
+            <i class="material-icons">person</i>
+            <input type="text" id="username" autofocus="true" required />
+            <span class="label">Username</span>
+            <span class="underline"></span>
+          </label>
+
+          <label class="form-input">
+            <i class="material-icons">lock</i>
+            <input id="password" type="password" required />
+            <span class="label">Password</span>
+            <div class="underline"></div>
+          </label>
+
+          <div class="submit-container clearfix" style="margin-top: 2rem;">
+            <div id="submit" role="button" type="button" class="btn btn-irenic float-right" tabindex="0"
+              onclick="validate()">
+              <span>LOGIN</span>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- footer -->
+  <footer>
+    <div class="container-fluid">
+      <p style="color: rgb(136, 136, 138)">Copyright &copy; 2022 <a href="https://github.com/TeamGravitas">Team GRAVITAS</a></p>
+    </div>
+  </footer>
+
+
+  <!-- partial -->
+  <script src="login.js"></script>
+
+</body>
+
+</html>

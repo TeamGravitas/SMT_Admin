@@ -1,0 +1,38 @@
+GET http://localhost:3000/users
+
+
+########
+GET http://localhost:3000/getSoftware/12
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwidGltZSI6MiwiaWF0IjoxNjYwOTM4ODMwfQ.pXn6QAmnRC4U4fCmdmNOqDfr0LxqGDGviQPRNYoG8uY
+
+#######
+POST http://localhost:3000/users/login 
+content-type: application/json
+
+{
+    "username": "admin",
+    "password": "123"
+
+}
+
+#######
+PUT http://localhost:3000/users/changePassword
+content-type: application/json
+
+{
+    "username": "admin",
+    "password": "125"
+
+}
+
+#######
+POST http://localhost:3000/users/register 
+content-type: application/json
+
+{
+    "username": "admin",
+    "password": "123"
+
+}
+#############
+POST http://localhost:3000/users 
