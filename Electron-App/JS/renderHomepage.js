@@ -4,7 +4,7 @@ var unaddedTable = document.getElementById("unaddedIpList").getElementsByTagName
 var ipInfo = [];
 
 function getIpInfo() {
-    fetch('http://localhost:3000/',{
+    fetch('http://localhost:3000/', {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -19,7 +19,24 @@ function getIpInfo() {
             console.log(ipInfo);
         })
         .then(() => {
-            renderIpInfo();
+            fetch('http://localhost:3000/discover_ip', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'authorization': 'Bearer ' + localStorage.getItem("accessToken")
+                },
+                // send the ip in JSON format
+            })
+                .then((response) => {
+                    return response.json();
+                })
+                .then((data) => {
+                    ipInfo = ipInfo.concat(data["res"]);
+                })
+                .then(() => {
+                    renderIpInfo();
+                });
         });
 }
 
@@ -71,7 +88,7 @@ function insertNewRecord(data) {
 getIpInfo();
 
 function addIPtoHomePage() {
-    let ip = document.getElementById("newIP").value;
+    let ip = document.geentById("newIP").value;
     //Push this ip to database
     console.log("the IP is " + ip);
     fetch('http://localhost:3000/addIP', {
@@ -85,11 +102,11 @@ function addIPtoHomePage() {
         body: JSON.stringify({
             ip: ip
         })
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-        }
-        );
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            }
+            )
+    });
 
 }

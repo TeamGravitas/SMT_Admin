@@ -1,0 +1,56 @@
+Starting Nmap 7.80 ( https://nmap.org ) at 2022-08-25 17:09 IST
+Nmap scan report for _gateway (192.168.198.1)
+Host is up (0.0032s latency).
+Nmap scan report for 192.168.198.2
+Host is up (0.21s latency).
+Nmap scan report for 192.168.198.6
+Host is up (0.11s latency).
+Nmap scan report for 192.168.198.15
+Host is up (0.14s latency).
+Nmap scan report for 192.168.198.30
+Host is up (0.19s latency).
+Nmap scan report for 192.168.198.35
+Host is up (0.0035s latency).
+Nmap scan report for hp-HP-Pavilion-Laptop-15-eg0xxx (192.168.198.40)
+Host is up (0.000096s latency).
+Nmap scan report for 192.168.198.51
+Host is up (0.051s latency).
+Nmap scan report for 192.168.198.53
+Host is up (0.18s latency).
+Nmap scan report for 192.168.198.54
+Host is up (0.14s latency).
+Nmap scan report for 192.168.198.60
+Host is up (0.080s latency).
+Nmap scan report for 192.168.198.61
+Host is up (0.083s latency).
+Nmap scan report for 192.168.198.66
+Host is up (0.067s latency).
+Nmap scan report for 192.168.198.68
+Host is up (0.085s latency).
+Nmap scan report for 192.168.198.70
+Host is up (0.18s latency).
+Nmap scan report for 192.168.198.81
+Host is up (0.12s latency).
+Nmap scan report for 192.168.198.96
+Host is up (0.044s latency).
+Nmap scan report for 192.168.198.104
+Host is up (0.078s latency).
+Nmap scan report for 192.168.198.105
+Host is up (0.14s latency).
+Nmap scan report for 192.168.198.108
+Host is up (0.0033s latency).
+Nmap scan report for 192.168.198.190
+Host is up (0.0038s latency).
+Nmap scan report for 192.168.198.213
+Host is up (0.097s latency).
+Nmap scan report for 192.168.198.216
+Host is up (0.061s latency).
+Nmap scan report for 192.168.198.220
+Host is up (0.34s latency).
+Nmap scan report for 192.168.198.225
+Host is up (0.097s latency).
+Nmap scan report for 192.168.198.249
+Host is up (0.10s latency).
+Nmap scan report for 192.168.198.254
+Host is up (0.0036s latency).
+Nmap done: 256 IP addresses (27 hosts up) scanned in 10.78 seconds

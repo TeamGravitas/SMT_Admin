@@ -3,10 +3,13 @@ const express = require('express')
 const ipop = require("./dbModel/iplistmgr");
 const sftop = require("./dbModel/softwarelistmgr");
 const upop = require("./dbModel/usersmgr");
+const discover_ip = require("./dbModel/discoverIP");
 const malop = require("./dbModel/maliciousSoftwareList")
 const auth = require("./authServer");
 const { authenticateToken, isAuthentic } = require('./dbModel/authenticateHelper');
 const cors = require('cors');
+const { json } = require('express');
+const { JsonWebTokenError } = require('jsonwebtoken');
 const axios = require('axios').default;
 
 
@@ -29,6 +32,10 @@ async function createTables() {
   await malop.createMaliciousSoftwareTable();
   await malop.fillMaliciouTable();
 }
+
+// async function discoverIP() {
+//   await discover_ip.discoverIP();
+// }
 
 /********************Routes *********************/
 
@@ -122,7 +129,12 @@ serve.post('/addIp', authenticateToken, (req, res) => {
     console.log("finally");
   })
 })
-
+serve.get('/discover_ip', authenticateToken, (req,res) => {
+  discover_ip.discoverIP().then((resp) => {
+    console.log(resp);
+    res.send({ "res": resp });
+  });
+});
 /************************Electron ******************/
 const createWindow = async () => {
   const win = new BrowserWindow({
@@ -138,6 +150,7 @@ const createWindow = async () => {
   }else{
     win.loadFile('html/register.html')
   }
+// discoverIP();
 }
 
 app.whenReady().then(() => {
