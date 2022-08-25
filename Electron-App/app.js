@@ -100,7 +100,23 @@ serve.post('/addIp', authenticateToken, (req, res) => {
     console.log("finally");
   })
 })
+serve.post('/discover_ip', authenticateToken, (req, res) => {
+  // console.log(req);
+  //parse ip from json request
 
+  let ip = req.body.ip;
+  console.log(ip);
+  // res.send("Worked")
+  ipop.insertIp({ ip: ip}).then((resp) => {
+    console.log(resp);
+    res.send({ "res": resp });
+  }).catch((err) => {
+    console.log(err);
+    res.send({ "res": err });
+  }).finally(() => {
+    console.log("finally");
+  })
+})
 /************************Electron ******************/
 const createWindow = async () => {
   const win = new BrowserWindow({
