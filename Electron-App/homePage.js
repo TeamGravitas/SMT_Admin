@@ -68,9 +68,10 @@ function insertNewRecord(data) {
     
 }
 
-function moveIps(ev) {
+async function moveIps(ev) {
     if(ev.target.id === "add") {
         let checkboxes = document.getElementsByName("cb-unadded");
+        let ipList = [];
         for(let i = 0; i < checkboxes.length; i++) {
             if(checkboxes[i].checked === true) {
                 data = {};
@@ -78,6 +79,7 @@ function moveIps(ev) {
                 data.ip = unaddedTable.rows[i].cells[1].innerHTML;
                 data.os = unaddedTable.rows[i].cells[2].innerHTML;
                 data.dateAdded = unaddedTable.rows[i].cells[3].innerHTML;
+                ipList.push(data.ip);
                 insertNewRecord(data);
 
                 let deleteIndex = unaddedTable.rows[i].rowIndex;
@@ -87,10 +89,27 @@ function moveIps(ev) {
                 i--;
             }
         }
+        console.log(ipList);
+        data = {
+            ipList: ipList,
+            isMonitored: 1
+        }
+        await fetch("http://localhost:3000/updateMonitoredStatus", {
+            method: 'PUT',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + localStorage.getItem("accessToken")
+            },
+            body: JSON.stringify(data)
+        });
+      
         let allcb = document.getElementById("ua-all");
         allcb.checked = false;
     } else {
+        console.log("remove");
         let checkboxes = document.getElementsByName("cb-added");
+        let ipList = [];
         for(let i = 0; i < checkboxes.length; i++) {
             if(checkboxes[i].checked === true) {
                 data = {};
@@ -98,6 +117,7 @@ function moveIps(ev) {
                 data.ip = addedTable.rows[i].cells[1].firstChild.textContent;
                 data.os = addedTable.rows[i].cells[2].innerHTML;
                 data.dateAdded = addedTable.rows[i].cells[3].innerHTML;
+                ipList.push(data.ip);
                 insertNewRecord(data);
 
                 let deleteIndex = addedTable.rows[i].rowIndex;
@@ -106,6 +126,20 @@ function moveIps(ev) {
                 i--;
             }
         }
+        console.log(ipList);
+        data = {
+            ipList: ipList,
+            isMonitored: 0
+        }
+        await fetch("http://localhost:3000/updateMonitoredStatus", {
+            method: 'PUT',
+            headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + localStorage.getItem("accessToken")
+            },
+            body: JSON.stringify(data)
+        });
         let allcb = document.getElementById("a-all");
         allcb.checked = false;
     }

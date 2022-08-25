@@ -62,6 +62,14 @@ serve.get('/getSoftware/:ip', authenticateToken, (req, res) => {
     });
 });
 
+serve.put('/updateMonitoredStatus', authenticateToken, (req, res) => {
+  let data = req.body;
+  // console.log(data);
+  ipop.updateMonitoredStatus(data.ipList, data.isMonitored). then((resp) => {
+    // console.log(resp);
+    res.send({"res": resp});
+  })
+})
 
 serve.post('/users/login', auth.login);
 

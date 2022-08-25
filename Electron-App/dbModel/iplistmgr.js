@@ -61,6 +61,22 @@ exports.deleteIp = (ip) => {
     });
 }
 
+exports.updateMonitoredStatus = (ipList, val) => {
+    const query = `UPDATE iplist SET isMonitored = ? WHERE ip in (${ ipList.map(() => "?").join(",") })`;
+    // console.log(ipList, val);
+    ipList.unshift(val);
+    return new Promise((rs,rj) => { 
+        db.run(query, ipList, function(err) {
+            if (err) {
+                rj(err);
+            }
+            // get the last insert id
+            // console.log(`Number of rows updated ${this.changes}`);
+            rs("Success");
+        })
+    });
+}
+
 // exports.createIpTable();
 // exports.insertIp({ip: "1.1.1.1", os: "Windows"});
 // exports.insertIp({ip: "2.2.2.2", os: "Linux"});
