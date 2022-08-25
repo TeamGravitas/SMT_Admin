@@ -1,25 +1,21 @@
-async function change() {
+async function validate() {
     console.log("I am being clicked");
-    var oldp = document.getElementById("old").value;
-    var newp = document.getElementById("new").value;
-    console.log(oldp,newp);
-    if(oldp==newp){
-      document.getElementById("error").classList.remove("hidden");
+    var username = document.getElementById("username").value;
+    var password = document.getElementById("password").value;
+    var confirmPassword = document.getElementById("confirmPassword").value;
+    if(password != confirmPassword){
+        document.getElementById("error").classList.remove("hidden");
         setTimeout(function () {
             document.getElementById("error").classList.add("hidden");
         } , 2000);
         return;
     }
-    var yourUrl = "http://localhost:3000/users/changePassword";
-    const dataToSend = JSON.stringify({ "old": oldp, "new": newp});
+    var yourUrl = "http://localhost:3000/users/register";
+    const dataToSend = JSON.stringify({ "username": username, "password": password, "isSuperAdmin": 1 });
     let dataReceived = "";
     await fetch(yourUrl, {
-        method: "PUT",
-        headers: { 
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-            'authorization': 'Bearer ' + localStorage.getItem("accessToken")
-        },
+        method: "post",
+        headers: { "Content-Type": "application/json" },
         body: dataToSend
     })
         .then((resp) => {
@@ -34,7 +30,7 @@ async function change() {
             if (dataJson.accessToken != undefined) {
                 localStorage.setItem("accessToken", dataJson.accessToken);
                 console.log("accessToken: " + localStorage.getItem("accessToken"));
-                window.location.href = "./index.html";
+                window.location.href = "../html/index.html";
             }
             else {
                 // remove the hidden class and add again after 2 second

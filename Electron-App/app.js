@@ -112,18 +112,14 @@ const createWindow = async () => {
   let isSuperAdminCreated = await upop.countSuperAdmin();
   console.log(isSuperAdminCreated);
   if(isSuperAdminCreated>0){
-    win.loadFile('login.html')
+    win.loadFile('html/login.html')
   }else{
-    win.loadFile('register.html')
+    win.loadFile('html/register.html')
   }
 }
 
 app.whenReady().then(() => {
   createWindow()
 })
-
-
-
-
 
 exports.serve = serve;

@@ -76,7 +76,6 @@ exports.updateMonitoredStatus = (ipList, val) => {
         })
     });
 }
-
 // exports.createIpTable();
 // exports.insertIp({ip: "1.1.1.1", os: "Windows"});
 // exports.insertIp({ip: "2.2.2.2", os: "Linux"});
