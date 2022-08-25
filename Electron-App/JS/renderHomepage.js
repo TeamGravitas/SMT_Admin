@@ -1,29 +1,5 @@
 var addedTable = document.getElementById("addedIpList").getElementsByTagName('tbody')[0];
 var unaddedTable = document.getElementById("unaddedIpList").getElementsByTagName('tbody')[0];
-// var ipInfo = [{
-//     ip : "1.1.1.1",
-//     os : "Windows",
-//     dateAdded : new Date().toLocaleDateString(),
-//     added : true,
-// },
-// {
-//     ip : "2.2.2.2",
-//     os : "Linux",
-//     dateAdded : new Date().toLocaleDateString(),
-//     added : false,
-// },
-// {
-//     ip : "3.3.3.3",
-//     os : "Linux",
-//     dateAdded : new Date().toLocaleDateString(),
-//     added : true,
-// },
-// {
-//     ip : "4.4.4.4",
-//     os : "Windows",
-//     dateAdded : new Date().toLocaleDateString(),
-//     added : false,
-// }];
 
 var ipInfo = [];
 
@@ -65,7 +41,7 @@ function insertNewRecord(data) {
         cell2 = newRow.insertCell(1);
         let ip = document.createElement('a');
         let link = document.createTextNode(data.ip);
-        ip.href = "softwareList.html";
+        ip.href = "../html/softwareList.html";
         ip.appendChild(link);
         ip.onclick = function () {
             localStorage.setItem("ip", data.ip);

@@ -22,7 +22,7 @@ async function validate() {
             if (dataJson.accessToken != undefined) {
                 localStorage.setItem("accessToken", dataJson.accessToken);
                 console.log("accessToken: " + localStorage.getItem("accessToken"));
-                window.location.href = "./index.html";
+                window.location.href = "../html/index.html";
             }
             else {
                 // remove the hidden class and add again after 2 second

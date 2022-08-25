@@ -40,7 +40,7 @@ function insertNewRecord(data) {
         cell2 = newRow.insertCell(1);
         let ip = document.createElement('a');
         let link = document.createTextNode(data.ip);
-        ip.href = "softwareList.html";
+        ip.href = "../html/softwareList.html";
         ip.appendChild(link);
         ip.onclick = function() {
             localStorage.setItem("ip", data.ip);
@@ -103,13 +103,13 @@ async function moveIps(ev) {
             },
             body: JSON.stringify(data)
         });
-      
+
         let allcb = document.getElementById("ua-all");
         allcb.checked = false;
     } else {
         console.log("remove");
         let checkboxes = document.getElementsByName("cb-added");
-        let ipList = [];
+        let iplist = [];
         for(let i = 0; i < checkboxes.length; i++) {
             if(checkboxes[i].checked === true) {
                 data = {};

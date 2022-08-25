@@ -31,3 +31,16 @@ npm install
 ```bash
 npm run start
 ```
+
+
+## Frontend
+Current Features:
+- Display the data from the backend dynamically
+- Display the data in a table
+- Routing between different pages
+
+## TODO
+- Connection with the backend
+- Store user data in the database
+- Add an authentication for login
+
