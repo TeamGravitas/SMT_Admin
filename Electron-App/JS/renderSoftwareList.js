@@ -51,7 +51,7 @@ function getIpSoftwareInfo() {
     })
     .then((data) => {
         ipSoftwareInfo = data["res"];
-        // console.log(ipSoftwareInfo);
+        console.log(ipSoftwareInfo);
     })
     .then(() => {
         renderIpSoftwareInfo();

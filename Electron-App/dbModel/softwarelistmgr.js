@@ -47,9 +47,9 @@ exports.getIpWithSoftwareList = (softwareName) => {
 }
 
 exports.insertSoftware = (softwareObj) => {
-    const query = "INSERT INTO softwarelist(softwareName, uninstallString, isMalicious, version, dateInstalled, ip) VALUES(?, ?, ?, ?, ?, ?);";
+    const query = "INSERT INTO softwarelist(softwareName, uninstallString, isMalicious, size, version, dateInstalled, ip) VALUES(?, ?, ?, ?, ?, ?, ?);";
     return new Promise((rs,rj) => { 
-        db.run(query, [softwareObj.softwareName, softwareObj.uninstallString,0, softwareObj.version, softwareObj.dateInstalled, softwareObj.ip], function(err) {
+        db.run(query, [softwareObj.softwareName, softwareObj.uninstallString,0, softwareObj.size,softwareObj.version, softwareObj.dateInstalled, softwareObj.ip], function(err) {
             if (err) {
                 rj(err);
             }
