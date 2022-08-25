@@ -1,5 +1,4 @@
 var dbmgr = require("./dbmgr")
-var malop = require("./maliciousSoftwareList")
 var db = dbmgr.db;
 
 exports.createSoftwareTable = () => {
@@ -25,9 +24,24 @@ exports.getSoftwareList = (ip) => {
         if (err) {
             rj(err);
         }
-        // rows.forEach((row) => {
-        //     console.log(row);
-        // });
+        rows.forEach((row) => {
+            console.log(row);
+        });
+        rs(rows);   
+    })});
+}
+
+exports.getIpWithSoftwareList = (softwareName) => {
+    const query = "SELECT iplist.ip,os,dateAdded FROM softwarelist LEFT JOIN iplist on softwarelist.ip = iplist.ip WHERE softwareName LIKE ?;";
+    softwareName = "%"+softwareName+"%";
+    return new Promise((rs,rj) => {
+        db.all(query, softwareName, (err, rows) => {
+        if (err) {
+            rj(err);
+        }
+        rows.forEach((row) => {
+            console.log(row);
+        });
         rs(rows);   
     })});
 }
@@ -76,9 +90,10 @@ exports.deleteAllSoftwaresForIp = (ip) => {
 
 
 exports.updateMalciousStatus = (maliciousSoftwareList, val) => {
-    const query = `UPDATE list SET isMalicious = ? WHERE ip in (${ ipList.map(() => "?").join(",") })`;
+    const query = `UPDATE softwarelist SET isMalicious = ? WHERE softwareName in (${ maliciousSoftwareList.map(() => "?").join(",") })`;
     // console.log(ipList, val);
-    ipList.unshift(val);
+    maliciousSoftwareList.unshift(val);
+    // console.log(maliciousSoftwareList);
     return new Promise((rs,rj) => { 
         db.run(query, maliciousSoftwareList, function(err) {
             if (err) {
@@ -91,15 +106,17 @@ exports.updateMalciousStatus = (maliciousSoftwareList, val) => {
     });
 }
 
-exports.markMalciousStatus = () => {
-    malop.getMaliciousSoftwareList().then(async (maliciousSoftwareList) => {
-        await exports.updateMalciousStatus(maliciousSoftwareList, 1);
-    });
-}
 // exports.createSoftwareTable();
 
 // exports.insertSoftware({softwareName: "Python", isMalicious: 0, size: 20000, version: "3.8.1", dateInstalled: new Date().toDateString(), ip: "1.1.1.1"});
 // exports.insertSoftware({softwareName: "VScode", isMalicious: 1, size: 200000, version: "20.8.1", dateInstalled: new Date().toDateString(), ip: "1.1.1.1"});
 // exports.insertSoftware({softwareName: "ROS Melodic", isMalicious: 0, size: 2000000, version: "4.0.1", dateInstalled: new Date().toDateString(), ip: "2.2.2.2"});
-// exports.getSoftwareList("10.2.71.252");
+// exports.insertSoftware({softwareName: "VLC media player", isMalicious: 0, size: 2000000, version: "4.0.1", dateInstalled: new Date().toDateString(), ip: "3.3.3.3"});
+// exports.insertSoftware({softwareName: "UC browser", isMalicious: 0, size: 2000000, version: "4.0.1", dateInstalled: new Date().toDateString(), ip: "2.2.2.2"});
+// exports.insertSoftware({softwareName: "TIk Tok", isMalicious: 0, size: 2000000, version: "4.0.1", dateInstalled: new Date().toDateString(), ip: "1.1.1.1"});
+// exports.insertSoftware({softwareName: "CM Browers", isMalicious: 0, size: 2000000, version: "4.0.1", dateInstalled: new Date().toDateString(), ip: "1.1.1.1"});
+// exports.getSoftwareList("192.168.198.120");
 // exports.deleteSoftware(1);
+
+// exports.markMalciousStatus();
+// exports.getIpWithSoftwareList("VScode");

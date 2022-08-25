@@ -1,5 +1,6 @@
 var dbmgr = require("./dbmgr")
 var db = dbmgr.db;
+const {readFileSync, promises: fsPromises} = require('fs');
 
 exports.createMaliciousSoftwareTable = () => {
     const query = "CREATE TABLE IF NOT EXISTS maliciousSoftwareList (sid INTEGER PRIMARY KEY AUTOINCREMENT, softwareName TEXT NOT NULL);";
@@ -18,10 +19,10 @@ exports.createMaliciousSoftwareTable = () => {
 };
 
 exports.insertMaliciousSoftware = (softwareList) => {
-    let placeholders = languages.map((language) => '(?)').join(',');
-    const query = "INSERT INTO malicousSoftwareList(softwareName) values " + placeholders;
+    let placeholders = softwareList.map((software) => '(?)').join(',');
+    const query = "INSERT INTO maliciousSoftwareList(softwareName) values " + placeholders;
     return new Promise((rs,rj) => { 
-        db.run(query, [softwareObj.softwareName, 0, softwareObj.version, softwareObj.dateInstalled, softwareObj.ip], function(err) {
+        db.run(query, softwareList, function(err) {
             if (err) {
                 rj(err);
             }
@@ -35,13 +36,30 @@ exports.insertMaliciousSoftware = (softwareList) => {
 exports.getMaliciousSoftwareList = () => {
     const query = "SELECT softwareName FROM maliciousSoftwareList ORDER BY softwareName ASC;";
     return new Promise((rs,rj) => {
-        db.all(query, [ip], (err, rows) => {
+        db.all(query, (err, rows) => {
         if (err) {
             rj(err);
         }
-        // rows.forEach((row) => {
-        //     console.log(row);
-        // });
-        rs(rows);   
+        let maliciousList = []
+        rows.forEach((row) => {
+            console.log(row);
+            maliciousList.push(row.softwareName);
+        });
+        rs(maliciousList);   
     })});
 }
+
+
+// exports.createMaliciousSoftwareTable().then(() => {
+//     let filename = "maliciousList.txt";
+//     const contents = readFileSync(filename, 'utf-8');
+//     const arr = contents.split(/\r?\n/);
+//     console.log(arr);
+//     exports.insertMaliciousSoftware(arr).then(async () => {
+//         exports.getMaliciousSoftwareList();
+//     })
+// })
+
+exports.insertMaliciousSoftware(["Google Chrome", "Git"]).then(async () => {
+        exports.getMaliciousSoftwareList();
+})

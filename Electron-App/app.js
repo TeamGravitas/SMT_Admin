@@ -3,6 +3,7 @@ const express = require('express')
 const ipop = require("./dbModel/iplistmgr");
 const sftop = require("./dbModel/softwarelistmgr");
 const upop = require("./dbModel/usersmgr");
+const malop = require("./dbModel/maliciousSoftwareList")
 const auth = require("./authServer");
 const { authenticateToken, isAuthentic } = require('./dbModel/authenticateHelper');
 const cors = require('cors');
@@ -36,6 +37,13 @@ serve.get('/', authenticateToken, (req, res) => {
   })
 });
 
+// serve.get('/getSoftware/:ip', authenticateToken, (req, res) => {
+//   sftop.getSoftwareList(req.params["ip"]).then((resp) => {
+//           // console.log(resp);
+//           res.send({ "res": resp });
+//       });
+// });
+
 serve.get('/getSoftware/:ip', authenticateToken, (req, res) => {
 
   axios.get(`http://${req.params["ip"]}:5000/installedSoftware`)
@@ -55,11 +63,23 @@ serve.get('/getSoftware/:ip', authenticateToken, (req, res) => {
     })
     .catch(() =>console.log("Cannot Fetch Latest Data"))
     .then(() => {
-      sftop.getSoftwareList(req.params["ip"]).then((resp) => {
-        // console.log(resp);
-        res.send({ "res": resp });
-      })
+        malop.getMaliciousSoftwareList().then((maliciousSoftwareList) => {
+            sftop.updateMalciousStatus(maliciousSoftwareList, 1).then((resp) => {
+                if(resp === "Success") {
+                  sftop.getSoftwareList(req.params["ip"]).then((resp) => {
+              // console.log(resp);
+                    res.send({ "res": resp });
+                  });
+                }
+            })
+        });
     });
+});
+
+serve.get('/getIpWithSoftware/:softwareName', authenticateToken, (req, res) => {
+  sftop.getIpWithSoftwareList(req.params["softwareName"]).then((resp) => {
+    res.send({"res": resp});
+  })
 });
 
 serve.put('/updateMonitoredStatus', authenticateToken, (req, res) => {
