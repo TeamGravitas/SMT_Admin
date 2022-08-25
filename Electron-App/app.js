@@ -3,9 +3,12 @@ const express = require('express')
 const ipop = require("./dbModel/iplistmgr");
 const sftop = require("./dbModel/softwarelistmgr");
 const upop = require("./dbModel/usersmgr");
+const discover_ip = require("./dbModel/discoverIP");
 const auth = require("./authServer");
 const { authenticateToken, isAuthentic } = require('./dbModel/authenticateHelper');
 const cors = require('cors');
+const { json } = require('express');
+const { JsonWebTokenError } = require('jsonwebtoken');
 const axios = require('axios').default;
 
 
@@ -26,6 +29,10 @@ async function createTables() {
   await ipop.createIpTable();
   await sftop.createSoftwareTable();
 }
+
+// async function discoverIP() {
+//   await discover_ip.discoverIP();
+// }
 
 /********************Routes *********************/
 
@@ -100,23 +107,12 @@ serve.post('/addIp', authenticateToken, (req, res) => {
     console.log("finally");
   })
 })
-serve.post('/discover_ip', authenticateToken, (req, res) => {
-  // console.log(req);
-  //parse ip from json request
-
-  let ip = req.body.ip;
-  console.log(ip);
-  // res.send("Worked")
-  ipop.insertIp({ ip: ip}).then((resp) => {
+serve.get('/discover_ip', authenticateToken, (req,res) => {
+  discover_ip.discoverIP().then((resp) => {
     console.log(resp);
     res.send({ "res": resp });
-  }).catch((err) => {
-    console.log(err);
-    res.send({ "res": err });
-  }).finally(() => {
-    console.log("finally");
-  })
-})
+  });
+});
 /************************Electron ******************/
 const createWindow = async () => {
   const win = new BrowserWindow({
@@ -132,6 +128,7 @@ const createWindow = async () => {
   }else{
     win.loadFile('html/register.html')
   }
+// discoverIP();
 }
 
 app.whenReady().then(() => {
