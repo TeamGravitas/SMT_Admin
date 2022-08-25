@@ -49,6 +49,15 @@ exports.getMaliciousSoftwareList = () => {
     })});
 }
 
+exports.fillMaliciouTable=()=>{
+    let filename = "maliciousList.txt";
+    const contents = readFileSync(filename, 'utf-8');
+    const arr = contents.split(/\r?\n/);
+    console.log(arr);
+    exports.insertMaliciousSoftware(arr).then(async () => {
+        exports.getMaliciousSoftwareList();
+    })
+}
 
 // exports.createMaliciousSoftwareTable().then(() => {
 //     let filename = "maliciousList.txt";
@@ -60,6 +69,6 @@ exports.getMaliciousSoftwareList = () => {
 //     })
 // })
 
-exports.insertMaliciousSoftware(["Google Chrome", "Git"]).then(async () => {
-        exports.getMaliciousSoftwareList();
-})
+// exports.insertMaliciousSoftware(["Google Chrome", "Git"]).then(async () => {
+//         exports.getMaliciousSoftwareList();
+// })

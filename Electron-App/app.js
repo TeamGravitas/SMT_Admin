@@ -26,6 +26,8 @@ async function createTables() {
   await upop.createUsersTable();
   await ipop.createIpTable();
   await sftop.createSoftwareTable();
+  await malop.createMaliciousSoftwareTable();
+  await malop.fillMaliciouTable();
 }
 
 /********************Routes *********************/
@@ -48,7 +50,7 @@ serve.get('/getSoftware/:ip', authenticateToken, (req, res) => {
 
   axios.get(`http://${req.params["ip"]}:5000/installedSoftware`)
     .then((response) => {
-      // console.log(response.data);
+      console.log(response.data);
       return [response.data, req.params["ip"]];
     })
     .then((data) => {
