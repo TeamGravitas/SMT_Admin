@@ -86,6 +86,18 @@ function addIPtoHomePage() {
             ip: ip
         })
     })
+    fetch('http://localhost:3000/discover_ip', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+            'authorization': 'Bearer ' + localStorage.getItem("accessToken")
+        },
+        // send the ip in JSON format
+        body: JSON.stringify({
+            ip: ip
+        })
+    })
         .then((response) => response.json())
         .then((data) => {
             console.log(data);
