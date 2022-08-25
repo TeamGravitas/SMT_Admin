@@ -12,32 +12,45 @@ function getIpInfo() {
             'authorization': 'Bearer ' + localStorage.getItem("accessToken")
         }
     })
-        .then((response) => response.json())
-        .then((data) => {
-            ipInfo = data["res"];
-            console.log("hrllo");
-            console.log(ipInfo);
+    .then((response) => response.json())
+    .then((data) => {
+        ipInfo = data["res"];
+        console.log("hrllo");
+        console.log(ipInfo);
+        renderIpInfo();
+    })
+    .then(() => {
+        fetch('http://localhost:3000/discover_ip', {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'authorization': 'Bearer ' + localStorage.getItem("accessToken")
+            },
+            // send the ip in JSON format
         })
-        .then(() => {
-            fetch('http://localhost:3000/discover_ip', {
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            // ipInfo = ipInfo.concat(data["res"]);
+            fetch('http://localhost:3000/', {
                 method: 'GET',
                 headers: {
                     'Accept': 'application/json',
                     'Content-Type': 'application/json',
                     'authorization': 'Bearer ' + localStorage.getItem("accessToken")
-                },
-                // send the ip in JSON format
+                }
             })
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
-                    ipInfo = ipInfo.concat(data["res"]);
-                })
-                .then(() => {
-                    renderIpInfo();
-                });
+            .then((response) => response.json())
+            .then((data) => {
+                ipInfo = data["res"];
+                console.log("hrllo");
+                console.log(ipInfo);
+                renderIpInfo();
+            })
         });
+    });
 }
 
 function renderIpInfo() {

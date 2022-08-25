@@ -70,41 +70,41 @@ serve.get('/getSoftware/:ip', authenticateToken, (req, res) => {
       }
       // console.log(ipSoftwareInfo);
     })
-    .catch(() =>console.log("Cannot Fetch Latest Data"))
+    .catch(() => console.log("Cannot Fetch Latest Data"))
     .then(() => {
-        malop.getMaliciousSoftwareList().then((maliciousSoftwareList) => {
-            sftop.updateMalciousStatus(maliciousSoftwareList, 1).then((resp) => {
-                if(resp === "Success") {
-                  sftop.getSoftwareList(req.params["ip"]).then((resp) => {
+      malop.getMaliciousSoftwareList().then((maliciousSoftwareList) => {
+        sftop.updateMalciousStatus(maliciousSoftwareList, 1).then((resp) => {
+          if (resp === "Success") {
+            sftop.getSoftwareList(req.params["ip"]).then((resp) => {
               // console.log(resp);
-                    res.send({ "res": resp });
-                  });
-                }
-            })
-        });
+              res.send({ "res": resp });
+            });
+          }
+        })
+      });
     });
 });
 
 serve.get('/getIpWithSoftware/:softwareName', authenticateToken, (req, res) => {
   sftop.getIpWithSoftwareList(req.params["softwareName"]).then((resp) => {
-    res.send({"res": resp});
+    res.send({ "res": resp });
   })
 });
 
 serve.put('/updateMonitoredStatus', authenticateToken, (req, res) => {
   let data = req.body;
   // console.log(data);
-  ipop.updateMonitoredStatus(data.ipList, data.isMonitored). then((resp) => {
+  ipop.updateMonitoredStatus(data.ipList, data.isMonitored).then((resp) => {
     // console.log(resp);
-    res.send({"res": resp});
+    res.send({ "res": resp });
   })
 })
 
 serve.post('/users/login', auth.login);
 
-serve.post('/users/register',auth.register);
+serve.post('/users/register', auth.register);
 
-serve.put('/users/changePassword', authenticateToken,  auth.changePassword);
+serve.put('/users/changePassword', authenticateToken, auth.changePassword);
 
 serve.listen(port, () => {
   console.log(`App listening on port ${port}`)
@@ -129,12 +129,36 @@ serve.post('/addIp', authenticateToken, (req, res) => {
     console.log("finally");
   })
 })
-serve.get('/discover_ip', authenticateToken, (req,res) => {
+serve.get('/discover_ip', authenticateToken, async (req, res) => {
   discover_ip.discoverIP().then((resp) => {
     console.log(resp);
-    res.send({ "res": resp });
+    // res.send({ "res": resp });
+    helper(resp)
+      .then((resp) => {
+        console.log("Redolved", resp);
+        res.send({ "res": resp });
+      }
+      ).catch((err) => {
+        console.log(err);
+        res.send({ "err": err });
+      });
   });
 });
+
+function helper(resp) {
+  return new Promise((resolve, reject) => {
+    for (let i = 0; i < resp.length; i++) {
+      let ip = resp[i].ip;
+      let os = resp[i].os || "win";
+      console.log(ip, os);
+      // res.send("Worked")
+      ipop.insertIp({ ip: ip, os: os });
+    }
+    resolve("inserted");
+  })
+
+
+}
 /************************Electron ******************/
 const createWindow = async () => {
   const win = new BrowserWindow({
@@ -145,12 +169,12 @@ const createWindow = async () => {
   await createTables();
   let isSuperAdminCreated = await upop.countSuperAdmin();
   console.log(isSuperAdminCreated);
-  if(isSuperAdminCreated>0){
+  if (isSuperAdminCreated > 0) {
     win.loadFile('html/login.html')
-  }else{
+  } else {
     win.loadFile('html/register.html')
   }
-// discoverIP();
+  // discoverIP();
 }
 
 app.whenReady().then(() => {

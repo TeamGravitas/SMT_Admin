@@ -48,3 +48,22 @@ async function validate() {
 
     console.log(`Received: ${dataReceived}`)
 }
+
+let password = document.getElementById("confirmPassword");
+password.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        validate();
+    }
+}
+);
+
+let buttonn = document.getElementById("submit");
+// add event listener to the button for enter key
+buttonn.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        validate();
+    }
+}
+);

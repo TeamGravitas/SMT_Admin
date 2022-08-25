@@ -88,7 +88,9 @@ function insertNewRecord(data) {
         cell3 = newRow.insertCell(2);
         cell3.innerHTML = data.dateInstalled;
         cell4 = newRow.insertCell(3);
-        cell4.innerHTML = data.size;
+        if(data.size!=NaN || data.size!=null)
+            cell4.innerHTML = data.size;
+        else cell4.innerHTML = 0;
         cell5 = newRow.insertCell(4);
         cell5.innerHTML = data.version;
         cell6 = newRow.insertCell(5);
