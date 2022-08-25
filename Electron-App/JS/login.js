@@ -1,3 +1,5 @@
+let input = document.getElementById("submit");
+let button = document.getElementById("button-login");
 async function validate() {
     console.log("I am being clicked");
     var username = document.getElementById("username").value;
@@ -40,3 +42,25 @@ async function validate() {
 
     console.log(`Received: ${dataReceived}`)
 }
+
+// Addition of submmit on enter key
+
+let password = document.getElementById("password");
+password.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        validate();
+    }
+}
+);
+
+let buttonn = document.getElementById("submit");
+// add event listener to the button for enter key
+buttonn.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        validate();
+    }
+}
+);
+
