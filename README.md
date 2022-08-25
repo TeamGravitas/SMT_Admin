@@ -1,4 +1,4 @@
-# Software-Monitoring-Tool -- Front End
+# SMT_Admin
 A simple software that monitors the software installed on different PCs in LAN
 
 ## Requirement
