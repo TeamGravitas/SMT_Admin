@@ -16,6 +16,7 @@ function getIpSoftwareInfo() {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
             'authorization': 'Bearer ' + localStorage.getItem("accessToken")
+            
         }
     })
     .then((response) => {
