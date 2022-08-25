@@ -43,18 +43,24 @@ async function validate() {
     console.log(`Received: ${dataReceived}`)
 }
 
-// input.addEventListener("keypress", (event)=> {
-//     // If the user presses the "Enter" key on the keyboard
-//     if (event.key === "Enter") {
-//       // Cancel the default action, if needed
-//       event.preventDefault();
-//       // Trigger the button element with a click
-//       validate();
-//     }
-// });
-button.onclick = validate;
-input.addEventListener('keyup', function(e){
-    if(key == "Enter") { 
-      validate();
+// Addition of submmit on enter key
+
+let password = document.getElementById("password");
+password.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        validate();
     }
-  }) 
+}
+);
+
+let buttonn = document.getElementById("submit");
+// add event listener to the button for enter key
+buttonn.addEventListener("keyup", function (event) {
+    if (event.keyCode === 13) {
+        event.preventDefault();
+        validate();
+    }
+}
+);
+
