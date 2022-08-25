@@ -183,8 +183,9 @@ function displayResults(results) {
 
 function fetchResults(event) {
     if (event.key === "Enter") {
-        searchResults.classList.toggle("d-none");
-        ipPage.classList.toggle("d-none");
+        searchList.innerHTML = "";
+        searchResults.classList.remove("d-none");
+        ipPage.classList.add("d-none");
         // searchResults.textContent = "";
         let options = {
             method: "GET",
@@ -208,11 +209,9 @@ function fetchResults(event) {
 }
 
 function clearWhenEmtpy(event) {
-    if(event.key !== "Enter") {
-        if(searchBox.value === "") {
-            searchResults.classList.add("d-none");
-            ipPage.classList.remove("d-none");
-            searchList.innerHTML = "";
-        }
+    if(searchBox.value === "") {
+        searchResults.classList.add("d-none");
+        ipPage.classList.remove("d-none");
+        searchList.innerHTML = "";
     }
 }
