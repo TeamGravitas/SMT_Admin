@@ -2,7 +2,7 @@ var dbmgr = require("./dbmgr")
 var db = dbmgr.db;
 
 exports.createSoftwareTable = () => {
-    const query = "CREATE TABLE IF NOT EXISTS softwarelist (sid INTEGER PRIMARY KEY AUTOINCREMENT, softwareName TEXT NOT NULL, isMalicious INTEGER NOT NULL, size INTEGER,version TEXT,dateInstalled TEXT NOT NULL, ip TEXT NOT NULL, CONSTRAINT fk_iplist FOREIGN KEY (ip)REFERENCES departments(ip));";
+    const query = "CREATE TABLE IF NOT EXISTS softwarelist (sid INTEGER PRIMARY KEY AUTOINCREMENT, softwareName TEXT NOT NULL,  uninstallString TEXT, isMalicious INTEGER NOT NULL, size INTEGER,version TEXT,dateInstalled TEXT NOT NULL, ip TEXT NOT NULL, CONSTRAINT fk_iplist FOREIGN KEY (ip)REFERENCES departments(ip));";
     return new Promise((rs,rj) => {
         db.run(query, (err) => {
             if (err) {
@@ -32,9 +32,9 @@ exports.getSoftwareList = (ip) => {
 }
 
 exports.insertSoftware = (softwareObj) => {
-    const query = "INSERT INTO softwarelist(softwareName, isMalicious, version, dateInstalled, ip) VALUES(?, ?, ?, ?, ?);";
+    const query = "INSERT INTO softwarelist(softwareName, uninstallString, isMalicious, version, dateInstalled, ip) VALUES(?, ?, ?, ?, ?, ?);";
     return new Promise((rs,rj) => { 
-        db.run(query, [softwareObj.softwareName, 0, softwareObj.version, softwareObj.dateInstalled, softwareObj.ip], function(err) {
+        db.run(query, [softwareObj.softwareName, softwareObj.uninstallString,0, softwareObj.version, softwareObj.dateInstalled, softwareObj.ip], function(err) {
             if (err) {
                 rj(err);
             }
