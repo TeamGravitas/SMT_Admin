@@ -40,8 +40,9 @@ function renderIpSoftwareInfo() {
     }
 }
 
+
 function insertNewRecord(data) {
-    // data.isMalicious = 0;
+    // data.isMalicious = 1;
     // data.dateInstalled = "-";
     // data.size = 0;
     // data.sid = 1;
@@ -64,6 +65,15 @@ function insertNewRecord(data) {
         cell4.innerHTML = data.size;
         cell5 = newRow.insertCell(4);
         cell5.innerHTML = data.version;
+        cell6 = newRow.insertCell(5);
+        // add a button to delete the software
+        let deleteButton = document.createElement('button');
+        deleteButton.className = "btn btn-danger btn-sm";
+        deleteButton.innerHTML = '<i class="fa-solid fa-trash">';
+        deleteButton.onclick = function() {
+            deleteSoftware(data.sid);
+        }
+        cell6.appendChild(deleteButton);
     } else {
         let newRow = nm_softwarelist.insertRow(nm_softwarelist.length);
         cell1 = newRow.insertCell(0);
