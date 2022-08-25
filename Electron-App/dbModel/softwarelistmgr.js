@@ -1,4 +1,5 @@
 var dbmgr = require("./dbmgr")
+var malop = require("./maliciousSoftwareList")
 var db = dbmgr.db;
 
 exports.createSoftwareTable = () => {
@@ -70,6 +71,29 @@ exports.deleteAllSoftwaresForIp = (ip) => {
             // console.log(`A row has been deleted with rowid ${this.changes}`);
             rs(this.changes);
         })
+    });
+}
+
+
+exports.updateMalciousStatus = (maliciousSoftwareList, val) => {
+    const query = `UPDATE list SET isMalicious = ? WHERE ip in (${ ipList.map(() => "?").join(",") })`;
+    // console.log(ipList, val);
+    ipList.unshift(val);
+    return new Promise((rs,rj) => { 
+        db.run(query, maliciousSoftwareList, function(err) {
+            if (err) {
+                rj(err);
+            }
+            // get the last insert id
+            // console.log(`Number of rows updated ${this.changes}`);
+            rs("Success");
+        })
+    });
+}
+
+exports.markMalciousStatus = () => {
+    malop.getMaliciousSoftwareList().then(async (maliciousSoftwareList) => {
+        await exports.updateMalciousStatus(maliciousSoftwareList, 1);
     });
 }
 // exports.createSoftwareTable();
