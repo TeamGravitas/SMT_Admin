@@ -18,6 +18,32 @@ searchBox.addEventListener("keydown", fetchResults);
 searchBox.addEventListener("keyup", clearWhenEmtpy);
 
 
+async function deleteSoftware(softwareObj){
+    dataToSend = {"uninstallString": softwareObj.uninstallString};
+    dataToSend = JSON.stringify(dataToSend);
+    await fetch(`http://${softwareObj.ip}:5000/uninstallSoftware`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: dataToSend
+    })
+    .then((resp) => {
+        if (resp.status === 200) {
+            console.log("Software uninstalled successfully");
+            window.location.href = '../html/softwareList.html';
+        } else {
+            console.log("Status: " + resp.status)
+            
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        // loginError.innerHTML = "Invalid Username or Password";
+    }).finally(() => {
+        console.log("Finally");
+    })
+
+}
+
 async function clearLocalStorage() {
     localStorage.clear();
 }
@@ -177,6 +203,16 @@ function displayResult(data) {
         cell3.innerHTML = data.os;
         cell4 = newRow.insertCell(3);
         cell4.innerHTML = data.dateAdded;
+        cell5 = newRow.insertCell(4);
+        // add a button to delete the software
+        let deleteButton = document.createElement('button');
+        deleteButton.className = "btn btn-danger btn-sm";
+        deleteButton.innerHTML = '<i class="fa-solid fa-trash">';
+        deleteButton.onclick = function() {
+            // console.log("Logging",data);
+            deleteSoftware(data);
+        }
+        cell5.appendChild(deleteButton);
 }
 
 function displayResults(results) {
