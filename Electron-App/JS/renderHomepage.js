@@ -1,9 +1,10 @@
 var addedTable = document.getElementById("addedIpList").getElementsByTagName('tbody')[0];
 var unaddedTable = document.getElementById("unaddedIpList").getElementsByTagName('tbody')[0];
-
+const loader = document.getElementById("loadingDiv");
 var ipInfo = [];
 
 function getIpInfo() {
+    loader.style.display="block";
     fetch('http://localhost:3000/', {
         method: 'GET',
         headers: {
@@ -14,6 +15,7 @@ function getIpInfo() {
     })
     .then((response) => response.json())
     .then((data) => {
+        loader.style.display="none";
         ipInfo = data["res"];
         console.log("hrllo");
         console.log(ipInfo);
