@@ -74,7 +74,7 @@ function insertNewRecord(data) {
         cell4 = newRow.insertCell(3);
         cell4.innerHTML = data.dateAdded;
         cell5 = newRow.insertCell(4);
-        
+
     }
     
 }

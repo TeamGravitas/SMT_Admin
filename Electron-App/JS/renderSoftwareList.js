@@ -90,7 +90,7 @@ function insertNewRecord(data) {
         cell4 = newRow.insertCell(3);
         if(data.size!=NaN || data.size!=null)
             cell4.innerHTML = data.size;
-        else cell4.innerHTML = 0;
+        else cell4.innerHTML = 25064;
         cell5 = newRow.insertCell(4);
         cell5.innerHTML = data.version;
         cell6 = newRow.insertCell(5);

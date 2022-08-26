@@ -30,8 +30,8 @@ async function createTables() {
   await upop.createUsersTable();
   await ipop.createIpTable();
   await sftop.createSoftwareTable();
-  await malop.createMaliciousSoftwareTable();
-  await malop.fillMaliciouTable();
+  // await malop.createMaliciousSoftwareTable();
+  // await malop.fillMaliciouTable();
 }
 
 // async function discoverIP() {
