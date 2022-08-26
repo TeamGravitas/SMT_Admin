@@ -14,6 +14,12 @@ body {
     background-size:cover; 
     background-repeat: no-repeat;
 }
+
+.card{
+    background-image: url('https://img.freepik.com/free-vector/abstract-blue-wavy-with-blurred-light-curved-lines-background_1409-1240.jpg?w=2000');
+    background-size:cover; 
+    background-repeat: no-repeat;
+}
 .loader,
 .loader:after {
     border-radius: 30%;

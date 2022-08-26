@@ -7,8 +7,6 @@ var addBtn = document.getElementById("add");
 var removeBtn = document.getElementById("remove");
 var searchBox = document.getElementById("searchBox");
 var ipPage = document.getElementById("ipPage");
-var searchResults = document.getElementById("searchResults");
-var searchList = document.getElementById("ipSearchList").getElementsByTagName('tbody')[0];
 
 addAll.addEventListener("click", toggle);
 unaddAll.addEventListener("click", toggle);
