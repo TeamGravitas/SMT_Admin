@@ -32,8 +32,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="search.html">Search <i class="fa-solid fa-magnifying-glass"></i><span class="sr-only"></span></a>
-                      </li>
+                        <a class="nav-link" href="search.html">Search <i class="fa-solid fa-magnifying-glass"></i><span
+                                class="sr-only"></span></a>
+                    </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
                     </li>
@@ -91,6 +92,11 @@
                         <!-- <th scope="col">Uninstall</th> -->
                     </tr>
                 </thead>
+
+                <div style="display:none" id="loadingDiv">
+                    <div class="loader">Loading...</div>
+                </div>
+
                 <tbody>
                 </tbody>
             </table>
@@ -120,7 +126,7 @@
                 </tbody>
             </table>
         </div>
-        <script>
+        <!-- <script>
             $('body').append('<div style="" id="loadingDiv"><div class="loader">Loading...</div></div>');
         $(window).on('load', function(){
           setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
@@ -130,7 +136,7 @@
               // fadeOut complete. Remove the loading div
               $( "#loadingDiv" ).remove(); //makes page more lightweight 
           });  
-        }</script>
+        }</script> -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="../JS/renderSoftwareList.js"></script>
 </body>

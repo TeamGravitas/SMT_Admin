@@ -140,11 +140,14 @@
               Remove</button></th>
         </tr>
       </thead>
+
+      <div style="display:none" id="loadingDiv"><div class="loader">Loading...</div></div>
+      
       <tbody>
       </tbody>
     </table>
   </div>
-  <script>
+  <!-- <script>
     $('body').append('<div style="" id="loadingDiv"><div class="loader">Loading...</div></div>');
 $(window).on('load', function(){
   setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
@@ -155,7 +158,7 @@ function removeLoader(){
       $( "#loadingDiv" ).remove(); //makes page more lightweight 
   });  
 }
-  </script>
+  </script> -->
   <script src="../JS/renderHomepage.js"></script>
   <script src="../JS/homePage.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
