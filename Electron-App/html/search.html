@@ -29,8 +29,9 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="search.html">Search <i class="fa-solid fa-magnifying-glass"></i><span class="sr-only">(current)</span></a>
-                      </li>
+                        <a class="nav-link" href="search.html">Search <i class="fa-solid fa-magnifying-glass"></i><span
+                                class="sr-only">(current)</span></a>
+                    </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="index.html">Home <span class="sr-only"></span></a>
                     </li>
@@ -73,34 +74,35 @@
                         <h4>Search</h4>
                     </div>
                     <div class="card-body">
-                            <fieldset class="form-group">
-                                <div class="row">
-                                    <legend class="col-form-label col-lg-2 pt-0">Filter your search</legend>
-                                    <div class="col-sm-10">
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="gridRadios"
-                                                id="gridRadios1" value="option1" >
-                                            <label class="form-check-label" for="gridRadios1">
-                                                Search by IP Address
-                                            </label>
-                                        </div>
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="gridRadios"
-                                                id="gridRadios2" value="option2" checked>
-                                            <label class="form-check-label" for="gridRadios2">
-                                                Search by Software Name
-                                            </label>
-                                        </div>
+                        <fieldset class="form-group">
+                            <div class="row">
+                                <legend class="col-form-label col-lg-2 pt-0">Filter your search</legend>
+                                <div class="col-sm-10">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1"
+                                            value="option1">
+                                        <label class="form-check-label" for="gridRadios1">
+                                            Search by IP Address
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2"
+                                            value="option2" checked>
+                                        <label class="form-check-label" for="gridRadios2">
+                                            Search by Software Name
+                                        </label>
                                     </div>
                                 </div>
-                            </fieldset>
-                            <!-- <form action="post"> -->
-                                <div class="form-group">
-                                    <input type="text" class="form-control" id="to-search" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"
-                                        placeholder="Select the required filter and search">
-                                </div>
-                                <button id="searchBox" type="submit" class="btn btn-outline-primary">Search</button>
-                            <!-- </form> -->
+                            </div>
+                        </fieldset>
+                        <!-- <form action="post"> -->
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="to-search"
+                                pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"
+                                placeholder="Select the required filter and search">
+                        </div>
+                        <button id="searchBox" type="submit" class="btn btn-outline-primary">Search</button>
+                        <!-- </form> -->
                     </div>
                 </div>
             </div>
@@ -124,6 +126,64 @@
                 </tbody>
             </table>
         </div>
+
+        <div class="d-none">
+            <div class="container" style="
+    padding-top: 50px;
+    padding-bottom: 50px;">
+                <table class="table table-striped table-light" id="nm-softwareList">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Software Name</th>
+                            <th scope="col">Date of Installation</th>
+                            <th scope="col">Storage Size</th>
+                            <th scope="col">Version</th>
+                            <!-- <th scope="col">Uninstall</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Add the title of the table -->
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h3>Malicious Software List</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <table class="table table-striped table-light" id="m-softwareList">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Software Name</th>
+                            <th scope="col">Date of Installation</th>
+                            <th scope="col">Storage Size</th>
+                            <th scope="col">Version</th>
+                            <th scope="col">Uninstall</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script>
+            $('body').append('<div style="" id="loadingDiv"><div class="loader">Loading...</div></div>');
+            $(window).on('load', function () {
+                setTimeout(removeLoader, 2000); //wait for page load PLUS two seconds.
+            });
+            function removeLoader() {
+                $("#loadingDiv").fadeOut(500, function () {
+                    // fadeOut complete. Remove the loading div
+                    $("#loadingDiv").remove(); //makes page more lightweight 
+                });
+            }</script>
+
         <script src="../JS/search.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </body>
