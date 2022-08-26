@@ -62,7 +62,7 @@ serve.get('/getSoftware/:ip', authenticateToken, (req, res) => {
       return [response.data, req.params["ip"]];
     })
     .then((data) => {
-      ipSoftwareInfo = data[0]["res"];
+      let ipSoftwareInfo = data[0]["res"];
       // console.log(ipSoftwareInfo);
       sftop.deleteAllSoftwaresForIp(data[1]);
       for (let i = 0; i < ipSoftwareInfo.length; i++) {
@@ -87,9 +87,44 @@ serve.get('/getSoftware/:ip', authenticateToken, (req, res) => {
 });
 
 serve.get('/getIpWithSoftware/:softwareName', authenticateToken, (req, res) => {
+  ipop.getMonitoredIpList().then((iplist) => {
+    if(iplist.length>0){
+      for(let i=0;i<iplist.length;i++){
+        axios.get(`http://${iplist[i].ip}:5000/getChanges`)
+        .then((response) => {
+          console.log(response.data);
+          return [response.data, iplist[i].ip];
+        }).then((data) => {
+          let ipSoftwareInfo = data[0]["res"];
+          for(let j=0;j<ipSoftwareInfo.length;j++){
+            if(ipSoftwareInfo[j].op === "installed"){
+              sftop.insertSoftware(ipSoftwareInfo[j]);
+            }
+            else{
+              sftop.deleteSoftwareByName(ipSoftwareInfo[j].softwareName,ipSoftwareInfo[i].ip);
+            }
+          }
+          // console.log(ipSoftwareInfo);
+        }).catch(() => console.log("Cannot Fetch Latest Data"))
+        .then(() => {
+          malop.getMaliciousSoftwareList().then((maliciousSoftwareList) => {
+            sftop.updateMalciousStatus(maliciousSoftwareList, 1).then((resp) => {
+              if (resp === "Success") {
+                sftop.getSoftwareList(req.params["softwareName"]).then((resp) => {
+                  // console.log(resp);
+                  res.send({ "res": resp });
+                });
+              }
+            })
+          });
+        }).catch(() => console.log("Cannot Fetch Latest Data"));
+      }
+    }
+      
   sftop.getIpWithSoftwareList(req.params["softwareName"]).then((resp) => {
     res.send({ "res": resp });
   })
+})
 });
 
 serve.put('/updateMonitoredStatus', authenticateToken, (req, res) => {

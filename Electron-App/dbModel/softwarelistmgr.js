@@ -60,6 +60,20 @@ exports.insertSoftware = (softwareObj) => {
     });
 }
 
+exports.deleteSoftwareByName = (softwareName,ip) => {
+    const query = "DELETE FROM softwarelist WHERE softwareName = ? AND ip = ?";
+    return new Promise((rs,rj) => { 
+        db.run(query, softwareName, ip, function(err) {
+            if (err) {
+                rj(err);
+            }
+            // get the last insert id
+            // console.log(`A row has been deleted with rowid ${this.changes}`);
+            rs(this.changes);
+        })
+    });
+}
+
 exports.deleteSoftware = (sid) => {
     const query = "DELETE FROM softwarelist WHERE sid = ?";
     return new Promise((rs,rj) => { 

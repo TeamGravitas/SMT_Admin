@@ -62,11 +62,11 @@ exports.deleteIp = (ip) => {
 }
 
 exports.updateMonitoredStatus = (ipList, val) => {
-    const query = `UPDATE iplist SET isMonitored = ? WHERE ip in (${ ipList.map(() => "?").join(",") })`;
+    const query = `UPDATE iplist SET isMonitored = ? WHERE ip in (${ipList.map(() => "?").join(",")})`;
     // console.log(ipList, val);
     ipList.unshift(val);
-    return new Promise((rs,rj) => { 
-        db.run(query, ipList, function(err) {
+    return new Promise((rs, rj) => {
+        db.run(query, ipList, function (err) {
             if (err) {
                 rj(err);
             }
@@ -82,3 +82,35 @@ exports.updateMonitoredStatus = (ipList, val) => {
 // exports.insertIp({ip: "3.3.3.3", os: "Windows"});
 // exports.getIpList();
 // deleteIp("3.3.3.3");
+
+exports.countMonitored = () => {
+    const query = "SELECT COUNT(*) FROM iplist WHERE isMonitored = 1;"
+    return new Promise((rs, rj) => {
+        db.get(query, (err, row) => {
+            if (err) {
+                rj(err);
+            }
+            console.log(row['COUNT(*)']);
+            rs(row['COUNT(*)']);
+        });
+    }).catch(err => {
+        console.log(err);
+    }).finally(() => {
+        console.log("Finally");
+    });
+};
+
+exports.getMonitoredIpList = () => {
+    const query = "SELECT * FROM iplist WHERE isMonitored = 1;"
+    return new Promise((rs, rj) => {
+        db.all(query, [], (err, rows) => {
+            if (err) {
+                rj(err);
+            }
+            // rows.forEach((row) => {
+            //     console.log(row);
+            // });
+            rs(rows);
+        })
+    });
+};
