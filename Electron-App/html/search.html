@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Search Page</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/styles.css">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/0b8c566cd1.js" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Scripts -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="#">Software Monitoring <i class="fa-solid fa-chart-line"></i></a>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Help</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">About Us &nbsp &nbsp</a>
+                    </li>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline-light dropdown-toggle" style="width: 50px;"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa-solid fa-user"></i>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <!-- Dropdown menu links -->
+                            <a class="dropdown-item" href="#">View Profile <i class="fa-regular fa-user"></i></a>
+                            <a class="dropdown-item" href="../html/changepassword.html">Change Password <i
+                                    class="fa-solid fa-key"></i></a>
+                            <a class="dropdown-item" href="../html/login.html" role="button" type="button"
+                                onclick="clearLocalStorage()">LOGOUT <i
+                                    class="fa-solid fa-arrow-right-from-bracket"></i></a>
+                        </div>
+                    </div>
+                </ul>
+            </div>
+        </nav>
+    </div>
+    <!-- add a button to visit the previous page -->
+    <div>
+        <a href="history.back()" class="btn btn-outline-dark" style="width: 50px;margin-top: 25px;margin-left: 25px;">
+            <i class="fa-solid fa-arrow-left"></i>
+        </a>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Search</h3>
+                    </div>
+                    <div class="card-body">
+                            <fieldset class="form-group">
+                                <div class="row">
+                                    <legend class="col-form-label col-lg-2 pt-0">Filter your search</legend>
+                                    <div class="col-sm-10">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gridRadios"
+                                                id="gridRadios1" value="option1" checked>
+                                            <label class="form-check-label" for="gridRadios1">
+                                                Search by IP Address
+                                            </label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="gridRadios"
+                                                id="gridRadios2" value="option2">
+                                            <label class="form-check-label" for="gridRadios2">
+                                                Search by Software Name
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </fieldset>
+                            <form action="post">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" id="ip-to-search" pattern="^((\d{1,2}|1\d\d|2[0-4]\d|25[0-5])\.){3}(\d{1,2}|1\d\d|2[0-4]\d|25[0-5])$"
+                                        placeholder="Select the required filter and search">
+                                </div>
+                                <button type="submit" class="btn btn-lg btn-outline-primary">Search</button>
+                            </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="searchResults" class="d-none container">
+            <table class="table table-striped table-light" id="ipSearchList">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col"><input type="checkbox" id="ipSearch"></th>
+                        <th scope="col">IP</th>
+                        <th scope="col">OS</th>
+                        <th scope="col">Date Added</th>
+                        <!-- make the button centre aligned -->
+                        <th scope="col"><button class="btn btn-danger btn-sm" id="uninstall"><i
+                                    class="fa-solid fa-xmark"></i>
+                                Remove</button></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+        <script src="../JS/renderHomepage.js"></script>
+        <script src="../JS/homePage.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</body>
+
+</html>
