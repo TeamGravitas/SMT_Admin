@@ -1,5 +1,6 @@
 var nm_softwarelist = document.getElementById("nm-softwareList").getElementsByTagName('tbody')[0];
 var m_softwarelist = document.getElementById("m-softwareList").getElementsByTagName('tbody')[0];
+const loader = document.getElementById("loadingDiv");
 
 let ipHead = document.getElementById("ip-val");
 let curIp = localStorage.getItem("ip");
@@ -35,6 +36,7 @@ async function deleteSoftware(softwareObj){
 
 function getIpSoftwareInfo() {
     // 'http://10.2.73.1:3000/installedSoftware'
+    loader.style.display="block";
     fetch(`http://localhost:3000/getSoftware/${curIp}`,
     {
         method: 'GET',
@@ -50,6 +52,7 @@ function getIpSoftwareInfo() {
         return response.json()
     })
     .then((data) => {
+        loader.style.display="none";
         ipSoftwareInfo = data["res"];
         console.log(ipSoftwareInfo);
     })
