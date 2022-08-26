@@ -57,6 +57,8 @@ function insertNewRecord(data) {
         cell3.innerHTML = data.os;
         cell4 = newRow.insertCell(3);
         cell4.innerHTML = data.dateAdded;
+        cell5 = newRow.insertCell(4);
+        cell5.innerHTML = "<a href='../html/softwareList.html' class='delete'>Explore IP <i class='fa-solid fa-up-right-from-square'></i></a>";
     } else {
         let newRow = unaddedTable.insertRow(unaddedTable.length);
         cell1 = newRow.insertCell(0);
@@ -71,6 +73,8 @@ function insertNewRecord(data) {
         cell3.innerHTML = data.os;
         cell4 = newRow.insertCell(3);
         cell4.innerHTML = data.dateAdded;
+        cell5 = newRow.insertCell(4);
+        
     }
     
 }

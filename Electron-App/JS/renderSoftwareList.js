@@ -122,16 +122,16 @@ function insertNewRecord(data) {
         cell4.innerHTML = data.size;
         cell5 = newRow.insertCell(4);
         cell5.innerHTML = data.version;
-        cell6 = newRow.insertCell(5);
-        // add a button to delete the software
-        let deleteButton = document.createElement('button');
-        deleteButton.className = "btn btn-danger btn-sm";
-        deleteButton.innerHTML = '<i class="fa-solid fa-trash">';
-        deleteButton.onclick = function() {
-            // console.log(data);
-            deleteSoftware(data);
-        }
-        cell6.appendChild(deleteButton);
+        // cell6 = newRow.insertCell(5);
+        // // add a button to delete the software
+        // let deleteButton = document.createElement('button');
+        // deleteButton.className = "btn btn-danger btn-sm";
+        // deleteButton.innerHTML = '<i class="fa-solid fa-trash">';
+        // deleteButton.onclick = function() {
+        //     // console.log(data);
+        //     deleteSoftware(data);
+        // }
+        // cell6.appendChild(deleteButton);
     }
     
 }

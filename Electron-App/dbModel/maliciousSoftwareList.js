@@ -60,7 +60,7 @@ exports.fillMaliciouTable=()=>{
 }
 
 // exports.createMaliciousSoftwareTable().then(() => {
-//     let filename = "maliciousList.txt";
+//     let filename = "../maliciousList.txt";
 //     const contents = readFileSync(filename, 'utf-8');
 //     const arr = contents.split(/\r?\n/);
 //     console.log(arr);
@@ -69,6 +69,6 @@ exports.fillMaliciouTable=()=>{
 //     })
 // })
 
-// exports.insertMaliciousSoftware(["Google Chrome", "Git"]).then(async () => {
+// exports.insertMaliciousSoftware(["Transmission 3.00 (bb6b5a062e) (x64)"]).then(async () => {
 //         exports.getMaliciousSoftwareList();
 // })
