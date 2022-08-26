@@ -47,6 +47,8 @@ function getIpInfo() {
                 ipInfo = data["res"];
                 console.log("hrllo");
                 console.log(ipInfo);
+                addedTable.innerHTML = "";
+                unaddedTable.innerHTML = "";
                 renderIpInfo();
             })
         });

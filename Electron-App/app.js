@@ -11,7 +11,8 @@ const cors = require('cors');
 const { json } = require('express');
 const { JsonWebTokenError } = require('jsonwebtoken');
 const axios = require('axios').default;
-
+var schedule = require('node-schedule');
+const nodemailer = require('nodemailer');
 
 /*************************** ********************/
 const serve = express();
@@ -135,7 +136,7 @@ serve.get('/discover_ip', authenticateToken, async (req, res) => {
     // res.send({ "res": resp });
     helper(resp)
       .then((resp) => {
-        console.log("Redolved", resp);
+        console.log("Resolved", resp);
         res.send({ "res": resp });
       }
       ).catch((err) => {
@@ -182,3 +183,72 @@ app.whenReady().then(() => {
 })
 
 exports.serve = serve;
+
+
+// // //************************************Scheduler /************************************/
+// // //Scheduler to schedule the task to run every day every hour
+// // var j = schedule.scheduleJob('1 * * * *', schedulerForMail);
+
+// //Scheduler helper function
+// function schedulerForMail() {
+
+//   // console.log('The answer to life, the universe, and everything!');
+//   //Call the function to call all the ip's and get the latest software installed
+//   ipop.getIpList().then((resp) => {
+//     // console.log(resp);
+//     for (let i = 0; i < resp.length; i++) {
+//       if (resp[i].isMonitored == 0) {
+//         continue
+//       }
+//       axios.get(`http://${resp[i].ip}:5000/installedSoftware`)
+//         .then((response) => {
+//           // console.log(response.data);
+//           return [response.data, resp[i].ip];
+//         }).then((data) => {
+//           ipSoftwareInfo = data[0]["res"];
+//           // console.log(ipSoftwareInfo);
+//           sftop.deleteAllSoftwaresForIp(data[1]);
+//           for (let i = 0; i < ipSoftwareInfo.length; i++) {
+//             ipSoftwareInfo[i].ip = data[1];
+//             sftop.insertSoftware(ipSoftwareInfo[i]);
+//           }
+//           // console.log(ipSoftwareInfo);
+//         }).catch(() => console.log("Cannot Fetch Latest Data"))
+//         .then(() => {
+//           malop.getMaliciousSoftwareList().then((maliciousSoftwareList) => {
+//             sftop.updateMalciousStatus(maliciousSoftwareList, 1).then((resp) => {
+//               if (resp === "Success") {
+//                 sftop.getSoftwareList(req.params["ip"]).then((resp) => {
+//                   let mailOptions = {
+
+//                     from: 'kingtemp204000@zohomail.in',
+//                     to: 'abdurrahman@iitbhilai.ac.in',
+//                     subject: `Malicious Software Detected in IP: ${req.params["ip"]}`,
+//                     text: `Malicious Softwares are installed on the system:\n ${resp}`,
+//                   };
+//                   if (resp.length > 0) {
+//                     transporter.sendMail(mailOptions, (error, info) => {
+//                       if (error) console.log("Error in sending mail, you can log if you want");
+//                       else console.log('Email sent: ' + info.response);
+//                     });
+//                   }
+
+//                   // console.log(resp);
+//                   res.send({ "res": resp });
+//                 });
+//               }
+//             })
+//           });
+//         })
+//         .catch((err) => {
+//           console.log(err);
+//         }).finally(() => {
+//           console.log("finally");
+//         });
+//     }
+//   });
+// }
+
+
+// //Just calling function one time, when the app is started
+// schedulerForMail();
