@@ -7,6 +7,32 @@ ipHead.textContent = curIp;
 
 ipSoftwareInfo = []
 
+async function deleteSoftware(softwareObj){
+    dataToSend = {"uninstallString": softwareObj.uninstallString};
+    dataToSend = JSON.stringify(dataToSend);
+    await fetch(`http://${softwareObj.ip}:5000/uninstallSoftware`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: dataToSend
+    })
+    .then((resp) => {
+        if (resp.status === 200) {
+            console.log("Software uninstalled successfully");
+            window.location.href = '../html/softwareList.html';
+        } else {
+            console.log("Status: " + resp.status)
+            
+        }
+    })
+    .catch(err => {
+        console.log(err);
+        // loginError.innerHTML = "Invalid Username or Password";
+    }).finally(() => {
+        console.log("Finally");
+    })
+
+}
+
 function getIpSoftwareInfo() {
     // 'http://10.2.73.1:3000/installedSoftware'
     fetch(`http://localhost:3000/getSoftware/${curIp}`,
@@ -25,7 +51,7 @@ function getIpSoftwareInfo() {
     })
     .then((data) => {
         ipSoftwareInfo = data["res"];
-        // console.log(ipSoftwareInfo);
+        console.log(ipSoftwareInfo);
     })
     .then(() => {
         renderIpSoftwareInfo();
@@ -40,8 +66,9 @@ function renderIpSoftwareInfo() {
     }
 }
 
+
 function insertNewRecord(data) {
-    // data.isMalicious = 0;
+    // data.isMalicious = 1;
     // data.dateInstalled = "-";
     // data.size = 0;
     // data.sid = 1;
@@ -64,6 +91,16 @@ function insertNewRecord(data) {
         cell4.innerHTML = data.size;
         cell5 = newRow.insertCell(4);
         cell5.innerHTML = data.version;
+        cell6 = newRow.insertCell(5);
+        // add a button to delete the software
+        let deleteButton = document.createElement('button');
+        deleteButton.className = "btn btn-danger btn-sm";
+        deleteButton.innerHTML = '<i class="fa-solid fa-trash">';
+        deleteButton.onclick = function() {
+            // console.log("Logging",data);
+            deleteSoftware(data);
+        }
+        cell6.appendChild(deleteButton);
     } else {
         let newRow = nm_softwarelist.insertRow(nm_softwarelist.length);
         cell1 = newRow.insertCell(0);
@@ -83,6 +120,16 @@ function insertNewRecord(data) {
         cell4.innerHTML = data.size;
         cell5 = newRow.insertCell(4);
         cell5.innerHTML = data.version;
+        cell6 = newRow.insertCell(5);
+        // add a button to delete the software
+        let deleteButton = document.createElement('button');
+        deleteButton.className = "btn btn-danger btn-sm";
+        deleteButton.innerHTML = '<i class="fa-solid fa-trash">';
+        deleteButton.onclick = function() {
+            // console.log(data);
+            deleteSoftware(data);
+        }
+        cell6.appendChild(deleteButton);
     }
     
 }
